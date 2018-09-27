@@ -1,0 +1,4 @@
+3
+sprite_sheet knight assets/spritesheets/Knight.png 4 4
+sprite_sheet mage assets/spritesheets/Mage.png 4 4
+sprite_sheet thief assets/spritesheets/Thief.png 4 4
