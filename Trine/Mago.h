@@ -1,5 +1,6 @@
 #pragma once
 #include "Personagem.h"
+#include"BolaDeFogo.h"
 class Mago :
 	public Personagem
 {

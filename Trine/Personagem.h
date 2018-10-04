@@ -19,11 +19,16 @@ public:
 	~Personagem();
 	virtual void especial() = 0;
 	void setPosV(Vetor2D ponei);
-	void setPos(int x, int y);
 	Vetor2D getPosV();
+	int getX();
+	int getY();
+	void setPos(float x, float y);
 	void setVel(float vel);
 	void setSpriteSheet(string spritesheet);
+	void setDirecao(int dir);
+	int getDirecao();
 
+	
 	void moverDir();
 	void moverEsq();
 	void moverCima();
@@ -36,6 +41,7 @@ protected:
 	Sprite sprite;
 	float x, y;
 	float vel;
+	int direcao;
 };
 
 

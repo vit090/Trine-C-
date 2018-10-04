@@ -23,6 +23,9 @@ void Jogo::inicializar()
 	}
 
 	mapa.carregar("assets/tilemaps/mapa.json");
+	
+	gRecursos.carregarSpriteSheet("bola", "assets/spritesheets/bolinha.png");
+
 
 	classe[0] = new Guerreiro;
 	classe[1] = new Mago;
@@ -30,6 +33,8 @@ void Jogo::inicializar()
 	classe[0]->setSpriteSheet("knight");
 	classe[1]->setSpriteSheet("mage");
 	classe[2]->setSpriteSheet("thief");
+
+	bola->setSpriteSheet("bola");
 
 	classe[0]->setPos(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
 	classe[0]->setVel(1);
@@ -54,6 +59,8 @@ void Jogo::executar()
 
 		mapa.desenhar();
 	
+		//--------------------------------------------//
+		//Seleção de personagem
 		if (gTeclado.pressionou[TECLA_1])
 		{
 			posicao = classe[select]->getPosV();
@@ -74,7 +81,9 @@ void Jogo::executar()
 			select = 2;
 			classe[select]->setPosV(posicao);
 		}
-		
+
+		//--------------------------------------------//
+		//Movimentação
 		if (gTeclado.segurando[TECLA_DIR]) {
 			classe[select]->moverDir();
 			classe[select]->animar();
@@ -91,14 +100,34 @@ void Jogo::executar()
 			classe[select]->moverBaixo();
 			classe[select]->animar();
 		}
-		
+
+		//--------------------------------------------//
+		//Especiais
 		Ladrao* l = (Ladrao*)classe[2];
 
-		if (select == 2) {
-			if (gTeclado.pressionou[TECLA_ESPACO]) {
-				l->especial();
-			}
+		if (select == 2 && gTeclado.pressionou[TECLA_ESPACO]) {
+			classe[2]->especial();
 		}
+		if (select == 1 && gTeclado.pressionou[TECLA_ESPACO]) {
+			bola->setDirecao(classe[1]->getDirecao());
+			while (bola->foraDaTela() == false)
+			{
+				bola->desenhar();
+				bola->atualizar();
+			}
+			
+		}
+
+		if (select == 1 && gTeclado.segurando[TECLA_ESPACO]) {
+			bola->desenhar();
+			bola->atualizar();
+		}
+		else {
+			bola->setX(classe[select]->getX());
+			bola->setY(classe[select]->getY());
+		}
+		//--------------------------------------------//
+		//Desenhar sprites
 		if (select != 2) {
 			classe[select]->desenhar();
 		}
@@ -107,6 +136,7 @@ void Jogo::executar()
 				classe[2]->desenhar();
 			}
 		}
+		
 		uniTerminarFrame();
 	}
 }

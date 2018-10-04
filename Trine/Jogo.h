@@ -23,5 +23,6 @@ protected:
 	int select;
 	TileMap mapa;
 	Vetor2D posicao;
+	BolaDeFogo* bola = new BolaDeFogo;
 };
 
